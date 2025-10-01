@@ -1,0 +1,158 @@
+{% comment %} this is a django level comment, cant be seen in browsers source code {% endcomment %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Seniors – Legal Ops</title>
+
+    <!-- Bootstrap 5 (CDN) -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-white border-bottom">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="#">Name of Project</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainnav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div id="mainnav" class="collapse navbar-collapse">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+            <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
+            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="#cta">Get Started</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="py-5 py-lg-6 bg-white border-bottom">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-7">
+            <h1 class="display-5 fw-bold mb-3">
+              Automate contracts & cases — fast, simple, secure.
+            </h1>
+            <p class="lead text-secondary">
+              A lightweight portal for small to mid-sized law offices: create contracts,
+              track cases, and streamline client communication.
+            </p>
+            <div class="d-flex gap-3 mt-4">
+              <a href="#cta" class="btn btn-primary btn-lg">Try it now</a>
+              <a href="#features" class="btn btn-outline-secondary btn-lg">See features</a>
+            </div>
+          </div>
+          <div class="col-lg-5">
+            <div class="ratio ratio-16x9 bg-light rounded-3 border d-flex align-items-center justify-content-center">
+              <span class="text-muted">Placeholder image/illustration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Features -->
+    <section id="features" class="py-5">
+      <div class="container">
+        <h2 class="h1 fw-bold text-center mb-4">Built for busy legal teams</h2>
+        <p class="text-center text-secondary mb-5">
+          Reduce repetitive work, minimize errors, and keep everything organized.
+        </p>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h3 class="h5">Contract Templates</h3>
+                <p class="text-secondary mb-0">
+                  Reusable templates with merge fields for quick, consistent documents.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h3 class="h5">Case Tracking</h3>
+                <p class="text-secondary mb-0">
+                  Statuses, deadlines, and assignments at a glance.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h3 class="h5">Client Updates</h3>
+                <p class="text-secondary mb-0">
+                  Keep clients in the loop with clear, centralized messaging.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="py-5 bg-white border-top border-bottom">
+      <div class="container">
+        <h2 class="h1 fw-bold text-center mb-5">How it works</h2>
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="p-4 h-100 border rounded-3">
+              <div class="fs-2 fw-bold mb-2">1</div>
+              <h3 class="h5">Add clients & cases</h3>
+              <p class="text-secondary mb-0">Start with core details—no clutter.</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="p-4 h-100 border rounded-3">
+              <div class="fs-2 fw-bold mb-2">2</div>
+              <h3 class="h5">Generate documents</h3>
+              <p class="text-secondary mb-0">Use templates and merge fields to draft quickly.</p>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="p-4 h-100 border rounded-3">
+              <div class="fs-2 fw-bold mb-2">3</div>
+              <h3 class="h5">Track progress</h3>
+              <p class="text-secondary mb-0">Monitor statuses, deadlines, and communications.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section id="cta" class="py-5">
+      <div class="container text-center">
+        <h2 class="h1 fw-bold mb-3">Ready to reduce admin work?</h2>
+        <p class="text-secondary mb-4">Spin up your first case in minutes.</p>
+        <a class="btn btn-primary btn-lg" href="#">Get Started</a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-4 bg-white border-top">
+      <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+        <span class="text-secondary">&copy; {{ now|default:"2025" }} Name of Project</span>
+        <div class="d-flex gap-3">
+          <a href="#" class="link-secondary text-decoration-none">Privacy</a>
+          <a href="#" class="link-secondary text-decoration-none">Terms</a>
+          <a href="#" class="link-secondary text-decoration-none">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS (CDN) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+  </body>
+</html>
