@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.urls import path
-from .views import hello_accounts
+from . import views
 
-
-urlpatterns = [ path("", hello_accounts, name="accounts-home") ]
+urlpatterns = [
+    path('login/', views.login_view, name='login'),
+]
