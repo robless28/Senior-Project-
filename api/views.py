@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from cases.models import Case
-from .serializers import CaseSerializer
+from documents.models import Document
+from .serializers import CaseSerializer, DocumentSerializer
 
 class CaseViewSet(viewsets.ModelViewSet):
     """
@@ -8,3 +9,7 @@ class CaseViewSet(viewsets.ModelViewSet):
     """
     queryset = Case.objects.all()
     serializer_class = CaseSerializer
+
+class DocumentViewSet(viewsets.ModelViewSet):
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
