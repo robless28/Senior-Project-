@@ -5,14 +5,15 @@
     <title>Login</title>
     <style>
         body { font-family: sans-serif; text-align: center; margin-top: 50px; }
-        form { display: inline-block; text-align: left; }
-        input { margin-bottom: 10px; width: 200px; padding: 5px; }
+        form { display: inline-block; text-align: left; border: 1px solid #ccc; padding: 20px; border-radius: 5px; }
+        input { margin-bottom: 10px; width: 250px; padding: 8px; }
+        input[type="submit"] { background-color: #007bff; color: white; cursor: pointer; }
     </style>
 </head>
 <body>
     <h2>Attorney & Client Portal Login</h2>
-    <form method="post">
-        <label for="email">Email</label><br>
+    <form id="login-form">
+        {% csrf_token %} <label for="email">Email</label><br>
         <input type="email" id="email" name="email" required><br>
 
         <label for="password">Password</label><br>
@@ -20,5 +21,44 @@
 
         <input type="submit" value="Log In">
     </form>
-</body>
-</html>
+    <p id="error-message" style="color: red;"></p>
+
+    <script>
+    const form = document.getElementById('login-form');
+    const errorMessage = document.getElementById('error-message');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); 
+        errorMessage.textContent = ''; 
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const response = await fetch('/api/auth/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                // --- NEW CODE ---
+                // Save the token to localStorage
+                localStorage.setItem('authToken', data.key);
+                
+                // Redirect to a new dashboard page
+                window.location.href = '/dashboard/';
+                // --- END NEW CODE ---
+            } else {
+                errorMessage.textContent = 'Login failed: ' + (data.non_field_errors || 'Please check your credentials.');
+            }
+        } catch (error) {
+            errorMessage.textContent = 'An error occurred. Please try again.';
+            console.error('Login Error:', error);
+        }
+    });
+</script>

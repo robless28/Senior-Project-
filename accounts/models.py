@@ -44,20 +44,3 @@ class CustomUser(AbstractUser):
 # (pyhton manage.py migrate) - applies instructions to actual database (SQLite in Django)
 
 # Django comes with an ORM (Object-Relational Mapper) so you don't need to write raw SQL, just use python code
-
-"""
-For example
-# Add a new client
-client = Client.objects.create(
-    firstname="Maria",
-    lastname="Gonzalez",
-    email="maria@example.com",
-    phone="123-456-7890",
-    address="123 Main St"
-)
-
-# Query clients
-all_clients = Client.objects.all()
-specific_client = Client.objects.get(id=1)
-
-"""
