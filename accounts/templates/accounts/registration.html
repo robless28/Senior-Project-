@@ -162,33 +162,82 @@
 
     <!-- Form validation + password match -->
     <script>
-      (function () {
-        'use strict';
+  (function () {
+    'use strict';
 
-        const form = document.querySelector('.needs-validation');
-        const pw = document.getElementById('password');
-        const pw2 = document.getElementById('confirmPassword');
+    const form = document.querySelector('.needs-validation');
+    const pw = document.getElementById('password');
+    const pw2 = document.getElementById('confirmPassword');
+    const messageEl = document.createElement('div'); // Create a new element for messages
+    form.prepend(messageEl); // Add it to the top of the form
 
-        function checkMatch() {
-          if (pw.value && pw2.value && pw.value !== pw2.value) {
-            pw2.setCustomValidity('Passwords do not match');
+    function checkMatch() {
+      if (pw.value && pw2.value && pw.value !== pw2.value) {
+        pw2.setCustomValidity('Passwords do not match');
+      } else {
+        pw2.setCustomValidity('');
+      }
+    }
+
+    pw.addEventListener('input', checkMatch);
+    pw2.addEventListener('input', checkMatch);
+
+    form.addEventListener('submit', async function (event) {
+      // Always prevent the default form submission to handle it with JS
+      event.preventDefault();
+      event.stopPropagation();
+
+      checkMatch(); // Run your password match check
+      form.classList.add('was-validated'); // Show validation styles
+
+      // If the form is not valid according to the browser's checks, stop
+      if (!form.checkValidity()) {
+        return;
+      }
+
+      // --- NEW API LOGIC STARTS HERE ---
+      const firstName = document.getElementById('firstName').value;
+      const lastName = document.getElementById('lastName').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const password2 = document.getElementById('confirmPassword').value;
+
+      try {
+          const response = await fetch('/api/auth/registration/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                  first_name: firstName,
+                  last_name: lastName,
+                  email: email,
+                  password: password,
+                  password2: password2,
+              }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+              messageEl.className = 'alert alert-success mb-4';
+              messageEl.textContent = 'Registration successful! You can now log in.';
+              form.reset();
+              form.classList.remove('was-validated');
           } else {
-            pw2.setCustomValidity('');
+              messageEl.className = 'alert alert-danger mb-4';
+              let errorMessage = 'Registration failed: ';
+              for (const key in data) { // Nicely format error messages from the API
+                  errorMessage += `${data[key].join(' ')} `;
+              }
+              messageEl.textContent = errorMessage;
           }
-        }
-
-        pw.addEventListener('input', checkMatch);
-        pw2.addEventListener('input', checkMatch);
-
-        form.addEventListener('submit', function (event) {
-          checkMatch();
-          if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-          }
-          form.classList.add('was-validated');
-        }, false);
-      })();
-    </script>
+      } catch (error) {
+          messageEl.className = 'alert alert-danger mb-4';
+          messageEl.textContent = 'An error occurred. Please try again.';
+          console.error('Registration Error:', error);
+      }
+      // --- NEW API LOGIC ENDS HERE ---
+    }, false);
+  })();
+</script>
   </body>
 </html>
