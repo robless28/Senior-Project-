@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from cases.models import Case
+
 
 def home_view(request):
     return render(request, 'index.html')
@@ -18,13 +20,23 @@ def attorney_registration_view(request):
     return render(request, 'accounts/attorney_registration.html')
 
 @login_required
+def attorney_dashboard(request):
+    return render(request, 'accounts/attorney_dashboard.html')
+
+
+@login_required
 def dashboard_view(request):
-    if request.user.role == 'ATTORNEY':
-        # Show the attorney's dashboard
-        return render(request, 'accounts/attorney_dashboard.html')
-    elif request.user.role == 'CLIENT':
-        # Show the client's dashboard
-        return render(request, 'clients/clientDashboard.html')
-    else:
-        # If user has no role, send them back to login
-        return redirect('login')
+     if request.user.role == 'ATTORNEY':
+        # Get all cases where the attorney is the currently logged-in user
+        cases = Case.objects.filter(attorney=request.user)
+        context = {'cases': cases}
+        return render(request, 'accounts/attorney_dashboard.html', context)
+     
+     elif request.user.role == 'CLIENT':
+        # Get all cases where the client is the currently logged-in user
+        cases = Case.objects.filter(client=request.user)
+        context = {'cases': cases}
+        return render(request, 'clients/clientDashboard.html', context)
+
+     else:
+        return redirect('accounts:login')

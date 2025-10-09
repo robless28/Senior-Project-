@@ -24,7 +24,7 @@
       <div class="modal-body text-center">
         <p class="lead">How are you planning to use the platform?</p>
         <div class="d-grid gap-3 col-8 mx-auto">
-          <a href="{% url 'accounts:registration' %}" class="btn btn-primary btn-lg">I'm a Client</a>
+          <a href="{% url 'clients:clientRegistration' %}" class="btn btn-primary btn-lg">I'm a Client</a>
           <a href="{% url 'accounts:attorney_registration' %}" class="btn btn-outline-secondary btn-lg">I'm an Attorney</a>
         </div>
       </div>
@@ -152,7 +152,7 @@
       <div class="container text-center">
         <h2 class="h1 fw-bold mb-3">Ready to reduce admin work?</h2>
         <p class="text-secondary mb-4">Spin up your first case in minutes.</p>
-        <a class="btn btn-primary btn-lg" href="{% url 'accounts:registration' %}">Get Started</a>
+        <a class="btn btn-primary btn-lg" href="{% url 'accounts:attorney_registration' %}">Get Started</a>
       </div>
     </section>
 

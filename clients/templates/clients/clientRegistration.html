@@ -24,8 +24,8 @@
         <div id="mainnav" class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto">
             <a class="nav-link" href="{% url 'accounts:home' %}">Home</a>            
-            <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="#">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'clients:clientLogin' %}">Login</a></li>
+            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="{% url 'clients:clientRegistration'}">Register</a></li>
           </ul>
         </div>
       </div>
@@ -36,7 +36,7 @@
       <div class="container">
         <div class="row align-items-center g-4">
           <div class="col-lg-7">
-            <h1 class="display-5 fw-bold mb-2">Create your Owlery account</h1>
+            <h1 class="display-5 fw-bold mb-2">Create Your Client Account</h1>
             <p class="lead text-secondary mb-0">
               Set up your workspace to generate contracts, track cases, and keep clients informed.
             </p>
@@ -94,9 +94,7 @@
                       <label for="role" class="form-label">Role</label>
                       <select id="role" name="role" class="form-select" required>
                         <option value="" selected disabled>Choose…</option>
-                        <option>Attorney</option>
-                        <option>Paralegal</option>
-                        <option>Operations/Admin</option>
+                        <option>Client</option>
                         <option>Other</option>
                       </select>
                       <div class="invalid-feedback">Please select your role.</div>
@@ -135,7 +133,7 @@
                 <hr class="my-4">
 
                 <p class="mb-0 text-secondary">
-                  Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>.
+                  Already have a client account? <a href="{% url 'clients:clientLogin' %}">Log in</a>.
                 </p>
 
               </div>
@@ -181,6 +179,8 @@
 
     pw.addEventListener('input', checkMatch);
     pw2.addEventListener('input', checkMatch);
+    const csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value; 
+
 
     form.addEventListener('submit', async function (event) {
       // Always prevent the default form submission to handle it with JS
@@ -201,20 +201,27 @@
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const password2 = document.getElementById('confirmPassword').value;
+      const csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value; 
+
 
       try {
-          const response = await fetch('/api/auth/registration/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                  first_name: firstName,
-                  last_name: lastName,
-                  email: email,
-                  password: password,
-                  password2: password2,
-              }),
-          });
+    const response = await fetch('/api/registration/client/', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            // ADD CSRF HEADER
+            'X-CSRFToken': csrftoken 
+        },
+    });
 
+          if (response.ok) {
+              // If status is 200 or 201 (OK or Created), treat as success.
+              // Note: You should update this to your correct dashboard path!
+              window.location.href = '/clients/clientDashboard'; 
+              return; // Stop execution after redirect
+          }
+          
+          // Now, if it's not successful (e.g., 400 Bad Request), THEN parse the error JSON
           const data = await response.json();
 
           if (response.ok) {

@@ -11,9 +11,10 @@
     </style>
 </head>
 <body>
-    <h2>Attorney Portal Login</h2>
+    <h2>Client Portal Login</h2>
     <form id="login-form">
-        {% csrf_token %} <label for="email">Email</label><br>
+        {% csrf_token %} 
+        <label for="email">Email</label><br>
         <input type="email" id="email" name="email" required><br>
 
         <label for="password">Password</label><br>
@@ -28,12 +29,16 @@
     const errorMessage = document.getElementById('error-message');
 
     form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Stop the form from submitting the traditional way
-        errorMessage.textContent = ''; // Clear previous errors
+        event.preventDefault(); 
+        errorMessage.textContent = ''; 
 
-        // 1. Get the data from the form
+        // 1. Get the data AND the CSRF token
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        const data = {
+            email: formData.get('email'),
+            password: formData.get('password')
+        };
+        const csrftoken = form.querySelector('[name="csrfmiddlewaretoken"]').value;
 
         try {
             // 2. Send the data to your API endpoint
@@ -41,7 +46,8 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': formData.get('csrfmiddlewaretoken') // Include the CSRF token
+                    // *** Send the correctly retrieved token in the header ***
+                    'X-CSRFToken': csrftoken 
                 },
                 body: JSON.stringify(data)
             });
@@ -50,21 +56,25 @@
 
             // 3. Handle the response
             if (response.ok) {
-                // Login successful! Redirect the user.
-                // You'll need to figure out where to send them, e.g., a dashboard.
-                window.location.href = '/accounts/attorney_dashboard'; // <-- CHANGE THIS to your dashboard URL
+                // Login successful!
+                window.location.href = '/clients/clientDashboard'; // Use a leading slash for an absolute path
             } else {
                 // Login failed, display the error messages
                 let errorText = '';
-                for (const key in result) {
-                    errorText += `${result[key].join(' ')}\n`;
+                // Check for non-field errors (like invalid credentials)
+                if (result.non_field_errors) {
+                    errorText += result.non_field_errors.join(' ');
+                } else {
+                    // Check for field-specific errors (like missing email)
+                    for (const key in result) {
+                        errorText += `${result[key].join(' ')}\n`;
+                    }
                 }
                 errorMessage.textContent = errorText || 'Login failed. Please check your credentials.';
             }
         } catch (error) {
-            // Handle network errors
             console.error('Error:', error);
-            errorMessage.textContent = 'An error occurred. Please try again.';
+            errorMessage.textContent = 'A network error occurred. Please try again.';
         }
     });
 </script>

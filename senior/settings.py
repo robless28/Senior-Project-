@@ -50,6 +50,14 @@ REST_FRAMEWORK = {
     )
 }
 
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -139,6 +147,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 REST_AUTH = {
     'REGISTER_SERIALIZER': 'api.serializers.CustomRegisterSerializer',
+    'USER_DETAILS_SERIALIZER': 'api.serializers.UserDetailsSerializer',
+    'SESSION_LOGIN': True,
 }
 
 SITE_ID = 1
+
+# Allauth Configuration
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False

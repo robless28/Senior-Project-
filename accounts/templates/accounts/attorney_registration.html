@@ -25,7 +25,7 @@
           <ul class="navbar-nav ms-auto">
             <a class="nav-link" href="{% url 'accounts:home' %}">Home</a>            
             <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}">Login</a></li>
-            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="#">Register</a></li>
+            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="{% url 'accounts:attorney_registration' %}">Register</a></li>
           </ul>
         </div>
       </div>
@@ -202,19 +202,27 @@
       const password = document.getElementById('password').value;
       const password2 = document.getElementById('confirmPassword').value;
 
-      try {
-          const response = await fetch('/api/auth/registration/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                  first_name: firstName,
-                  last_name: lastName,
-                  email: email,
-                  password: password,
-                  password2: password2,
-              }),
-          });
+      const csrftoken = document.querySelector('[name="csrfmiddlewaretoken"]').value; 
 
+
+      try {
+    const response = await fetch('/api/registration/attorney/', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            // ADD CSRF HEADER
+            'X-CSRFToken': csrftoken 
+        },
+    });
+
+          if (response.ok) {
+              // If status is 200 or 201 (OK or Created), treat as success.
+              // Note: You should update this to your correct dashboard path!
+              window.location.href = '/accounts/attorney_dashboard'; 
+              return; // Stop execution after redirect
+          }
+          
+          // Now, if it's not successful (e.g., 400 Bad Request), THEN parse the error JSON
           const data = await response.json();
 
           if (response.ok) {

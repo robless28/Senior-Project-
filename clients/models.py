@@ -9,7 +9,6 @@ class ClientProfile(models.Model):
         on_delete=models.CASCADE,
         related_name='client_profile'
     )
-
     # --- Add only client-specific fields here ---
     company_name = models.CharField(max_length=255, blank=True)
     preferred_contact_method = models.CharField(
