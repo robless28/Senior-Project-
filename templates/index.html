@@ -14,6 +14,24 @@
   </head>
   <body class="bg-light">
 
+    <div class="modal fade" id="roleChoiceModal" tabindex="-1" aria-labelledby="roleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="roleModalLabel">Choose Your Role</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="lead">How are you planning to use the platform?</p>
+        <div class="d-grid gap-3 col-8 mx-auto">
+          <a href="{% url 'accounts:registration' %}" class="btn btn-primary btn-lg">I'm a Client</a>
+          <a href="#" class="btn btn-outline-secondary btn-lg">I'm an Attorney</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white border-bottom">
       <div class="container">
@@ -25,7 +43,7 @@
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
             <li class="nav-item"><a class="nav-link" href="#how">How it works</a></li>
-            <li class="nav-item"><a class="btn btn-primary ms-lg-3" href="{% url 'accounts:registration' %}">Get Started</a></li>
+            <a class="btn btn-primary ms-lg-3" href="#" data-bs-toggle="modal" data-bs-target="#roleChoiceModal">Get Started</a>
           </ul>
         </div>
       </div>
