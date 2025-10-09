@@ -14,6 +14,9 @@ def registration_view(request):
     # This view simply renders the registration.html template
     return render(request, 'accounts/registration.html')
 
+def attorney_registration_view(request):
+    return render(request, 'accounts/attorney_registration.html')
+
 @login_required
 def dashboard_view(request):
     if request.user.role == 'ATTORNEY':

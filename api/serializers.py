@@ -24,3 +24,10 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.role = 'CLIENT'
         user.save()
         return user
+    
+class AttorneyRegisterSerializer(RegisterSerializer):
+    def save(self, request):
+        user = super().save(request)
+        user.role = 'ATTORNEY' # Set the role to ATTORNEY
+        user.save()
+        return user

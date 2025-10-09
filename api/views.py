@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from cases.models import Case
 from documents.models import Document
 from .serializers import CaseSerializer, DocumentSerializer
+from dj_rest_auth.registration.views import RegisterView
+from .serializers import AttorneyRegisterSerializer
 
 class CaseViewSet(viewsets.ModelViewSet):
     """
@@ -13,3 +15,6 @@ class CaseViewSet(viewsets.ModelViewSet):
 class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+
+class AttorneyRegisterView(RegisterView):
+    serializer_class = AttorneyRegisterSerializer
