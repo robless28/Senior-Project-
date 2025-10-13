@@ -10,5 +10,4 @@ urlpatterns = [
     path('clientRegistration/', views.client_registration_view, name='clientRegistration'),
     path('clientProfilePage/', views.clientProfilePage_view, name='clientProfilePage'),
     path('clientDashboard/', views.clientDashboard, name='clientDashboard'),
-
 ]

@@ -36,8 +36,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # API routes
-    path('api/', include('accounts.urls')),          # 👈 includes registration/attorney/
-    path('api/', include('clients.urls')),
+    path('api/', include('accounts.api_urls')),          # 👈 includes registration/attorney/
+    path('api/', include('clients.api_urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/', include('api.urls')),
 
@@ -48,8 +48,8 @@ urlpatterns = [
     # Other app routes
     path('cases/', include('cases.urls')),
     path('documents/', include('documents.urls')),
-    path('clients/', include(('clients.urls', 'clients'), namespace='clients')),
-    path('accounts/', include(('accounts.urls'), namespace='accounts')),
+    path('clients/', include(('clients.web_urls', 'clients'), namespace='clients')),
+    path('accounts/', include(('accounts.web_urls'), namespace='accounts')),
 ]
 
 if settings.DEBUG:
