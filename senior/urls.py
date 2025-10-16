@@ -49,7 +49,7 @@ urlpatterns = [
     path('cases/', include('cases.urls')),
     path('documents/', include('documents.urls')),
     path('clients/', include(('clients.web_urls', 'clients'), namespace='clients')),
-    path('accounts/', include(('accounts.web_urls'), namespace='accounts')),
+    path('accounts/', include(('accounts.web_urls', 'accountsa'), namespace='accounts')),
 ]
 
 if settings.DEBUG:

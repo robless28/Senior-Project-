@@ -19,6 +19,10 @@ def registration_view(request):
 def attorney_registration_view(request):
     return render(request, 'accounts/attorney_registration.html')
 
+
+def attorney_profile_view(request):
+    return render(request, 'accounts/attorney_profile.html')
+
 @login_required
 def attorney_dashboard(request):
     return render(request, 'accounts/attorney_dashboard.html')

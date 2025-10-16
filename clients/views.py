@@ -5,7 +5,7 @@ from cases.models import Case
 
 def clientProfilePage_view(request):
     # This view simply renders the clientProfilePage.html template
-    return render(request, 'clients/clientProfilePage.html')
+    return render(request, 'clients/client_profile.html')
 
 def client_registration_view(request):
     return render(request, 'clients/clientRegistration.html')

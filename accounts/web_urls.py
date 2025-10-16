@@ -9,4 +9,5 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('registration/attorney/', views.attorney_registration_view, name='attorney_registration'),
     path('attorney_dashboard/', views.attorney_dashboard, name='attorney_dashboard'),
+    path('attorney_profile/', views.attorney_profile_view, name='attorney_profile'),
 ]
