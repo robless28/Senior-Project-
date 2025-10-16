@@ -3,20 +3,27 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 
  # Manages users, registration, login/logout, and user roles (like distinguishing between an "Attorney" and a "Client"). 
+class Role(models.Model):
+    # The name of the role (e.g., 'ATTORNEY', 'CLIENT', 'ADMIN')
+    name = models.CharField(max_length=50, unique=True)
+    # A short, descriptive display name
+    description = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+    
 class CustomUser(AbstractUser):
-    ROLE_CHOICES = (
-        ('ATTORNEY', 'Attorney'),
-        ('CLIENT', 'Client'),
-    )
     
     email = models.EmailField(unique=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username', 'first_name', 'last_name'] # username is still required under the hood
 
     # Custom Fields
-
-    role = models.CharField(max_length=10, choices=ROLE_CHOICES, blank=False, null=False)
-
+    roles = models.ManyToManyField(
+        'accounts.Role',  # Point this to your new Role model
+        related_name='users',
+        blank=True
+    )
     
     phone_regex = RegexValidator( # Regex validator ensures phone numbers follow a patter
         regex=r'^\+?1?\d{9,15}$', # start of string, optional + sign, optional leading 1 (US code), 9-15 digits, $ end of string
